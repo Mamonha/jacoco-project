@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BedService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">automated-tests</a> &gt; <a href="index.source.html" class="el_package">automated.tests.services</a> &gt; <span class="el_source">BedService.java</span></div><h1>BedService.java</h1><pre class="source lang-java linenums">package automated.tests.services;
+
+import automated.tests.entities.Bed;
+import automated.tests.exceptions.ResourceNotFoundException;
+import automated.tests.repositories.BedRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+<span class="fc" id="L13">public class BedService {</span>
+
+    @Autowired
+    private BedRepository bedRepository;
+
+    public List&lt;Bed&gt; getAllBeds() {
+<span class="nc" id="L19">        return bedRepository.findAll();</span>
+    }
+
+    public Optional&lt;Bed&gt; getBedById(Long id) {
+<span class="nc" id="L23">        return bedRepository.findById(id);</span>
+    }
+
+    public List&lt;Bed&gt; getAvailableBeds() {
+<span class="nc" id="L27">        return bedRepository.findByIsOccupiedFalse();</span>
+    }
+
+    public Bed createBed(Bed bed) {
+<span class="nc" id="L31">        bed.setOccupied(false);</span>
+<span class="nc" id="L32">        return bedRepository.save(bed);</span>
+    }
+
+    public Bed updateBed(Long id, Bed bedDetails) {
+<span class="nc" id="L36">        return bedRepository.findById(id)</span>
+<span class="nc" id="L37">                .map(bed -&gt; {</span>
+<span class="nc" id="L38">                    bed.setType(bedDetails.getType());</span>
+<span class="nc" id="L39">                    bed.setOccupied(bedDetails.isOccupied());</span>
+<span class="nc" id="L40">                    return bedRepository.save(bed);</span>
+<span class="nc" id="L41">                }).orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Bed not found with id &quot; + id));</span>
+    }
+
+    public void deleteBed(Long id) {
+<span class="nc" id="L45">        bedRepository.findById(id)</span>
+<span class="nc" id="L46">                .ifPresent(bedRepository::delete);</span>
+<span class="nc" id="L47">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

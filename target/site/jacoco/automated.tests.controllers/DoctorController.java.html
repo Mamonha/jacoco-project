@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DoctorController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">automated-tests</a> &gt; <a href="index.source.html" class="el_package">automated.tests.controllers</a> &gt; <span class="el_source">DoctorController.java</span></div><h1>DoctorController.java</h1><pre class="source lang-java linenums">package automated.tests.controllers;
+
+import automated.tests.entities.Doctor;
+import automated.tests.exceptions.ResourceNotFoundException;
+import automated.tests.services.DoctorService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(&quot;/api/doctors&quot;)
+<span class="fc" id="L14">public class DoctorController {</span>
+
+    @Autowired
+    private DoctorService doctorService;
+
+    @GetMapping
+    public List&lt;Doctor&gt; getAllDoctors() {
+<span class="nc" id="L21">        return doctorService.getAllDoctors();</span>
+    }
+
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Doctor&gt; getDoctorById(@PathVariable Long id) {
+<span class="nc" id="L26">        return doctorService.getDoctorById(id)</span>
+<span class="nc" id="L27">                .map(ResponseEntity::ok)</span>
+<span class="nc" id="L28">                .orElse(ResponseEntity.notFound().build());</span>
+    }
+
+    @PostMapping
+    public Doctor createDoctor(@RequestBody Doctor doctor) {
+<span class="nc" id="L33">        return doctorService.createDoctor(doctor);</span>
+    }
+
+    @PutMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Doctor&gt; updateDoctor(@PathVariable Long id, @RequestBody Doctor doctorDetails) {
+        try {
+<span class="nc" id="L39">            return ResponseEntity.ok(doctorService.updateDoctor(id, doctorDetails));</span>
+<span class="nc" id="L40">        } catch (ResourceNotFoundException e) {</span>
+<span class="nc" id="L41">            return ResponseEntity.notFound().build();</span>
+        }
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Void&gt; deleteDoctor(@PathVariable Long id) {
+<span class="nc" id="L47">        doctorService.deleteDoctor(id);</span>
+<span class="nc" id="L48">        return ResponseEntity.noContent().build();</span>
+    }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

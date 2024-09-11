@@ -1,0 +1,3 @@
+automated/tests/AutomatedTestsApplicationTests.class
+automated/tests/CalculatorControllerTest.class
+automated/tests/services/CalculatorServiceTest.class

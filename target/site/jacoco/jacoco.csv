@@ -1,0 +1,14 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+automated-tests,automated.tests.services,BedService,67,3,0,0,14,1,8,1,8,1
+automated-tests,automated.tests.services,DoctorService,60,3,0,0,12,1,7,1,7,1
+automated-tests,automated.tests.services,CalculatorService,0,71,0,16,0,13,0,13,0,5
+automated-tests,automated.tests.services,PatientService,60,3,0,0,13,1,5,1,5,1
+automated-tests,automated.tests.services,HealthUnitService,64,3,0,0,13,1,7,1,7,1
+automated-tests,automated.tests.enums,BedType,0,15,0,0,0,3,0,1,0,1
+automated-tests,automated.tests.controllers,BedController,42,3,0,0,11,1,6,1,6,1
+automated-tests,automated.tests.controllers,PatientController,31,3,0,0,6,1,5,1,5,1
+automated-tests,automated.tests.controllers,HealthUnitController,38,3,0,0,10,1,5,1,5,1
+automated-tests,automated.tests.controllers,CalculatorController,0,63,0,0,0,14,0,4,0,4
+automated-tests,automated.tests.controllers,DoctorController,38,3,0,0,10,1,5,1,5,1
+automated-tests,automated.tests,AutomatedTestsApplication,5,3,0,0,2,1,1,1,1,1
+automated-tests,automated.tests.exceptions,ResourceNotFoundException,4,0,0,0,2,0,1,0,1,0

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CalculatorController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">automated-tests</a> &gt; <a href="index.source.html" class="el_package">automated.tests.controllers</a> &gt; <span class="el_source">CalculatorController.java</span></div><h1>CalculatorController.java</h1><pre class="source lang-java linenums">package automated.tests.controllers;
+
+import automated.tests.services.CalculatorService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(&quot;/api/calculator&quot;)
+<span class="fc" id="L16">public class CalculatorController {</span>
+    @Autowired
+    private CalculatorService calculaService;
+
+    @PostMapping(&quot;/sum&quot;)
+    public ResponseEntity&lt;Integer&gt; sum(@RequestBody List&lt;Integer&gt; numeros) {
+        try {
+<span class="fc" id="L23">            int soma = calculaService.soma(numeros);</span>
+<span class="fc" id="L24">            return new ResponseEntity&lt;&gt;(soma, HttpStatus.OK);</span>
+<span class="fc" id="L25">        } catch (IllegalArgumentException e) {</span>
+<span class="fc" id="L26">            return new ResponseEntity&lt;&gt;(null, HttpStatus.BAD_REQUEST);</span>
+        }
+    }
+
+    @PostMapping(&quot;/average&quot;)
+    public ResponseEntity&lt;Double&gt; average(@RequestBody List&lt;Integer&gt; numeros) {
+        try {
+<span class="fc" id="L33">            double media = calculaService.media(numeros);</span>
+<span class="fc" id="L34">            return new ResponseEntity&lt;&gt;(media, HttpStatus.OK);</span>
+<span class="fc" id="L35">        } catch (IllegalArgumentException e) {</span>
+<span class="fc" id="L36">            return new ResponseEntity&lt;&gt;(null, HttpStatus.BAD_REQUEST);</span>
+        }
+    }
+
+    @PostMapping(&quot;/max-min&quot;)
+    public ResponseEntity&lt;String&gt; maxmin(@RequestBody List&lt;Integer&gt; numeros) {
+        try {
+<span class="fc" id="L43">            int maior = calculaService.encontrarMaior(numeros);</span>
+<span class="fc" id="L44">            int menor = calculaService.encontrarMenor(numeros);</span>
+<span class="fc" id="L45">            return ResponseEntity.ok(&quot;Maior: &quot; + maior + &quot;, Menor: &quot; + menor);</span>
+<span class="fc" id="L46">        } catch (IllegalArgumentException e) {</span>
+<span class="fc" id="L47">            return new ResponseEntity&lt;&gt;(null, HttpStatus.BAD_REQUEST);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

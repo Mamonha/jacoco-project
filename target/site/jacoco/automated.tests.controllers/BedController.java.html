@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BedController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">automated-tests</a> &gt; <a href="index.source.html" class="el_package">automated.tests.controllers</a> &gt; <span class="el_source">BedController.java</span></div><h1>BedController.java</h1><pre class="source lang-java linenums">package automated.tests.controllers;
+
+import automated.tests.entities.Bed;
+import automated.tests.exceptions.ResourceNotFoundException;
+import automated.tests.services.BedService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(&quot;/api/beds&quot;)
+<span class="fc" id="L14">public class BedController {</span>
+
+    @Autowired
+    private BedService bedService;
+
+    @GetMapping
+    public List&lt;Bed&gt; getAllBeds() {
+<span class="nc" id="L21">        return bedService.getAllBeds();</span>
+    }
+
+    @GetMapping(&quot;/available&quot;)
+    public List&lt;Bed&gt; getAvailableBeds() {
+<span class="nc" id="L26">        return bedService.getAvailableBeds();</span>
+    }
+
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Bed&gt; getBedById(@PathVariable Long id) {
+<span class="nc" id="L31">        return bedService.getBedById(id)</span>
+<span class="nc" id="L32">                .map(ResponseEntity::ok)</span>
+<span class="nc" id="L33">                .orElse(ResponseEntity.notFound().build());</span>
+    }
+
+    @PostMapping
+    public Bed createBed(@RequestBody Bed bed) {
+<span class="nc" id="L38">        return bedService.createBed(bed);</span>
+    }
+
+    @PutMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Bed&gt; updateBed(@PathVariable Long id, @RequestBody Bed bedDetails) {
+        try {
+<span class="nc" id="L44">            return ResponseEntity.ok(bedService.updateBed(id, bedDetails));</span>
+<span class="nc" id="L45">        } catch (ResourceNotFoundException e) {</span>
+<span class="nc" id="L46">            return ResponseEntity.notFound().build();</span>
+        }
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Void&gt; deleteBed(@PathVariable Long id) {
+<span class="nc" id="L52">        bedService.deleteBed(id);</span>
+<span class="nc" id="L53">        return ResponseEntity.noContent().build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
